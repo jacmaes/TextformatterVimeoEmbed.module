@@ -1,0 +1,39 @@
+<?php namespace ProcessWire;
+
+class TextformatterVimeoEmbed extends Textformatter {
+
+	public static function getModuleInfo() {
+		return array(
+			'title' => __('Video embed for Vimeo', __FILE__), 
+			'version' => 100, 
+			'summary' => __('Enter a full Vimeo URL by itself in any paragraph and this will automatically convert it to an embedded video. Modified from original module by Ryan to include only Vimeo.', __FILE__),
+			'author' => 'Ryan Cramer'
+		); 
+	}
+
+
+
+public function format(&$str) {
+
+        if (strpos($str, '://vimeo.com/') === false) return;
+
+        if (!preg_match_all('#<p>\s*(https?://vimeo.com/(\d+)).*?</p>#', $str, $matches)) return;
+
+        foreach ($matches[0] as $key => $line) {
+
+            $oembedURL =
+            "$this->https://vimeo.com/api/oembed.json?url=" . urlencode($matches[1][$key]) .
+            "&maxwidth={$this->maxWidth}&maxheight={$this->maxHeight}";
+
+            $videoID = $matches[2][$key];
+        }
+
+
+
+         foreach($matches[0] as $key => $line) {
+         $video_id = $matches[2][$key];
+         $str = str_replace($line, "<div class='embed-container'><iframe src='https://player.vimeo.com/video/$video_id' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>", $str);
+       }
+
+      }
+    }
