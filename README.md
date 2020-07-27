@@ -1,2 +1,2 @@
 # TextformatterVimeoEmbed.module
-ProcessWire Vimeo Embed Module 
+Texformatter Module for Processwire to embed Vimeo videos. Work in progress. 
